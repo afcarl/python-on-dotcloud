@@ -16,7 +16,7 @@ requirments_file="$HOME/current/requirements.txt"
 newrelic_config_template="$BUILDERDIR/newrelic.ini.in"
 python_bin="/usr/bin/python2.6"
 virtualenv_download_url="https://raw.github.com/pypa/virtualenv/master/virtualenv.py" #store locally? safer then downloading all the time?
-nginx_download_url="http://nginx.org/download/nginx-1.0.12.tar.gz"  #TODO configurable?
+nginx_download_url="http://nginx.org/download/nginx-1.0.14.tar.gz"  #TODO configurable?
 newrelic_allowed="yes" #boolean instead?
 
 # functions
