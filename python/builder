@@ -211,7 +211,27 @@ install_nginx() {
 
 build_profile(){
     cat > $start_dir/profile << EOF
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
 export PATH="$nginx_install_dir/sbin:$PATH"
+
+# if running bash
+if [ -n "$BASH_VERSION" ]; then
+    # include .bashrc if it exists
+    if [ -f "$HOME/.bashrc" ]; then
+        . "$HOME/.bashrc"
+    fi
+fi
+
+if [ -f $HOME/env/bin/activate ] ; then
+    source $HOME/env/bin/activate
+fi
+
+export PYTHONPATH=$HOME/current
 EOF
 
 }
