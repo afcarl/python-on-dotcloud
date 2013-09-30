@@ -15,7 +15,8 @@ pip_install="$virtualenv_dir/bin/pip install --use-mirrors --download-cache=~/.p
 requirments_file="$HOME/current/requirements.txt"
 newrelic_config_template="$BUILDERDIR/newrelic.ini.in"
 python_bin="/usr/bin/python2.6"
-virtualenv_download_url="https://raw.github.com/pypa/virtualenv/master/virtualenv.py" #store locally? safer then downloading all the time?
+# Update this source package as needed
+virtualenv_download_url="https://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.10.tar.gz"
 nginx_download_url="http://nginx.org/download/nginx-1.0.14.tar.gz"  #TODO configurable?
 newrelic_allowed="yes" #boolean instead?
 
@@ -78,8 +79,11 @@ create_virtualenv() {
         mkdir -p $virtualenv_stage_dir
         
         # can't use built in version of virtualenv, it doesn't support python3
-        msg "downloading virtualenv from ($virtualenv_download_url) and saving it as ($virtualenv_stage_dir/virtualenv.py)"
-        curl -o $virtualenv_stage_dir/virtualenv.py $virtualenv_download_url
+        msg "downloading virtualenv from ($virtualenv_download_url) and saving it as ($virtualenv_stage_dir/virtualenv.tar.gz)"
+        curl -o $virtualenv_stage_dir/virtualenv.tar.gz $virtualenv_download_url
+
+	msg "Unpacking tarball ..."
+	pushd $virtualenv_stage_dir && tar -x --strip-components=1 -vf virtualenv.tar.gz && popd
         
         # find out what python version we need to use. value will be in python_bin
         find_python_version
